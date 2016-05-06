@@ -1,0 +1,59 @@
+
+ loving a man ,  you're going to be a slave for this person.；
+loved by a man,  You will become the owner of this person.
+yesterday，I met a gentle girl.I want to be a  slave of her,but she don‘t thank so。
+
+
+
+
+yseterday,
+
+
+发起聊天
+	Intent intent = new Intent(this, ChatActivity.class);
+			intent.putExtra("user", user);
+			startAnimActivity(intent);
+			finish();
+
+
+      <ImageView
+            android:id="@+id/iv_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="30dp"
+            android:src="@drawable/login_logo" />
+
+友萌 Android 唯一Appkey为：
+5729770d67e58e9ceb000fe2
+
+
+
+用户注册
+	final User bu = new User();
+		bu.setUsername(name);
+		bu.setPassword(password);
+		//将user和设备id进行绑定aa
+		bu.setSex(true);
+		bu.setDeviceType("android");
+		bu.setInstallId(BmobInstallation.getInstallationId(this));
+		bu.signUp(RegisterActivity.this, new SaveListener() {
+
+			@Override
+			public void onSuccess() {
+				// TODO Auto-generated method stub
+				progress.dismiss();
+				ShowToast("注册成功");
+				// 将设备与username进行绑定
+				userManager.bindInstallationForRegister(bu.getUsername());
+				//更新地理位置信息
+				updateUserLocation();
+				//发广播通知登陆页面退出
+				sendBroadcast(new Intent(BmobConstants.ACTION_REGISTER_SUCCESS_FINISH));
+				// 启动主页
+				Intent intent = new Intent(RegisterActivity.this,MainActivity.class);
+				startActivity(intent);
+				finish();
+	
+获取当前用户信息
+		userManager = BmobUserManager.getInstance(context);
+		currentUser = userManager.getCurrentUser();
