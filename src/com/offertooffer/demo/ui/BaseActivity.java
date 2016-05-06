@@ -45,11 +45,7 @@ public class BaseActivity extends FragmentActivity {
 	
 	protected int mScreenWidth;
 	protected int mScreenHeight;
-	public  static <T> T findViewbyid_mine(T t,int id,View view){
-		View view1 = view.findViewById(id);
-		
-		return   (T) view1;
-	}
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub

@@ -114,6 +114,7 @@
             android:windowSoftInputMode="stateHidden|adjustPan" />
         
         <activity android:name="com.offertooffer.demo.ui.NewFriendActivity" />
+        <activity android:name="com.offertooffer.demo.ui.CreateNewSimpleJianLiActivity" />
         <activity android:name="com.offertooffer.demo.ui.NearPeopleActivity" />
         
         <activity android:name="com.offertooffer.demo.ui.UpdateInfoActivity" />

@@ -26,7 +26,7 @@ public class FirstActivity extends Activity{
 	}
 	public void btn_pushRen(View view){
 		
-		Intent i= new Intent(this, PublishTuiJianActivity.class);
+		Intent i= new Intent(this, CreateNewSimpleJianLiActivity.class);
 		
 		startActivity(i);
 		finish();

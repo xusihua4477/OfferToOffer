@@ -124,7 +124,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="fill_horizontal"
                 android:hint="多少年工作经验"
-                android:password="true" />
+              />
         </LinearLayout>
 
         <LinearLayout
@@ -145,7 +145,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="fill_horizontal"
                 android:hint="他要求工资多少"
-                android:password="true" />
+                 />
 
             <TextView
                 style="@style/tvStyle"
@@ -250,7 +250,6 @@
             android:layout_width="match_parent"
             android:layout_height="35dp"
             android:layout_gravity="bottom"
-            android:onClick="btn_return"
             android:background="@android:color/darker_gray"
             android:onClick="btnReturn"
             android:text="返回" />

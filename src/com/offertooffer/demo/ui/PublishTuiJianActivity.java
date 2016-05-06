@@ -26,9 +26,9 @@ public class PublishTuiJianActivity extends Activity{
 	}
 	public void btn_pushRen(View view){
 		
-		//Intent i= new Intent(this, cls)
+		Intent i= new Intent(this, CreateNewSimpleJianLiActivity.class);
 		
-		
+		startActivity(i);
 	}
 	public void btn_look_records(View view){
 		

@@ -1,9 +1,15 @@
 package com.offertooffer.demo.ui;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.RadioButton;
 import android.widget.Spinner;
+
+import cn.bmob.im.BmobUserManager;
+import cn.bmob.im.bean.BmobChatUser;
+import cn.bmob.v3.listener.SaveListener;
 
 import com.offertooffer.demo.R;
 import com.offertooffer.demo.adapter.base.ViewHolder;
@@ -23,6 +29,11 @@ public class CreateNewSimpleJianLiActivity extends ActivityBase {
 	EditText etAge;
 	EditText etExperience;
 	EditText etSalary;
+	RadioButton radioSex;
+	RadioButton radioDaZhuan;
+	RadioButton radioBenKe;
+	RadioButton radioShuoShi;
+
 	Spinner spinner_citys;
 	EditText etZhongjiefei;
 	View view;
@@ -30,25 +41,32 @@ public class CreateNewSimpleJianLiActivity extends ActivityBase {
 	private int experience;
 	private int salary;
 	private int zhongjiefei;
+	private Boolean sex;
 	private String city;
+	private String qualifications;
+	private EditText etTuijian_reasion;
+	private String recommend_reason;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.send_push_rencai_record);
-
+		initView();
 	}
 
 	private void initView() {
 
-		view = View.inflate(this, R.layout.send_push_rencai_record, null);
-		etAge = findViewbyid_mine(etAge, R.id.etAge, view);
-		etExperience = findViewbyid_mine(etExperience, R.id.etexperience, view);
-		etSalary = findViewbyid_mine(etSalary, R.id.etSalary, view);
-		etZhongjiefei = findViewbyid_mine(etZhongjiefei, R.id.etZhongjiefei,
-				view);
-
+		etAge = (EditText) findViewById(R.id.etAge);
+		etExperience = (EditText) findViewById(R.id.etexperience);
+		etSalary =(EditText) findViewById(R.id.etSalary);
+		etTuijian_reasion = (EditText) findViewById(R.id.etTuijian_reasion);
+		radioSex = (RadioButton) findViewById(R.id.rbMale);
+		 radioDaZhuan = (RadioButton) findViewById(R.id.rbDazhuan);
+		radioBenKe = (RadioButton) findViewById(R.id.rbDazhuan);
+		radioShuoShi = (RadioButton) findViewById(R.id.rbDazhuan);
+		etZhongjiefei = (EditText) findViewById(R.id.etZhongjiefei);
+		spinner_citys=(Spinner) findViewById(R.id.spinner_citys);
 	}
 
 	public void btn_publish(View view) {
@@ -58,15 +76,67 @@ public class CreateNewSimpleJianLiActivity extends ActivityBase {
 			return;
 		}
 
+		userManager = BmobUserManager.getInstance(getApplicationContext());
+		BmobChatUser currentUser = userManager.getCurrentUser();
+		
+		String objectId = currentUser.getObjectId();
+		Record_ZhaoPin record_ZhaoPin = new Record_ZhaoPin(city, objectId, recommend_reason, age, experience, salary, zhongjiefei, sex, qualifications);
+		record_ZhaoPin.save(this, new SaveListener() {
+			
+			@Override
+			public void onSuccess() {
+				// TODO Auto-generated method stub
+				System.out.println("悬赏记录创建成功");
+				System.out.println("悬赏记录创建成功");
+			}
+			
+			@Override
+			public void onFailure(int arg0, String arg1) {
+				// TODO Auto-generated method stub
+				System.out.println("悬赏记录创建失败"+arg1);
+				System.out.println("悬赏记录创建失败"+arg1);
+				System.out.println("悬赏记录创建失败"+arg1);
+				
+			}
+		});
+		
 	}
-
+	public   <T> T findViewbyid_mine(T t,int id){
+		View view1 =findViewById(id);
+		
+		return   (T) view1;
+	}
 	private boolean validateDate() {
-         age = Integer.parseInt(etAge.getText().toString());
-         experience = Integer.parseInt(etExperience.getText().toString());
-         salary = Integer.parseInt(etSalary.getText().toString());
-         zhongjiefei = Integer.parseInt(etZhongjiefei.getText().toString());
-           city = spinner_citys.getSelectedItem().toString();
-           new Record_ZhaoPin()；
+		String age1 = etAge.getText().toString();
+		age = Integer.parseInt(age1);
+		experience = Integer.parseInt(etExperience.getText().toString());
+		salary = Integer.parseInt(etSalary.getText().toString());
+		zhongjiefei = Integer.parseInt(etZhongjiefei.getText().toString());
+		 recommend_reason = etTuijian_reasion.getText().toString();
+		 if(spinner_citys.getSelectedItem()!=null){
+			 
+			 city = spinner_citys.getSelectedItem().toString();
+		 }else{
+			 city ="北京";
+		 }
+		
+		if (radioSex.isChecked()) {
+			sex=true;
+		} else {
+			sex=false;
+		}
+		if (radioBenKe.isChecked()) {
+			 qualifications=radioBenKe.getText().toString();
+		}
+       
+		if (radioDaZhuan.isChecked()) {
+			qualifications=radioBenKe.getText().toString();
+		}
+		
+		if (radioShuoShi.isChecked()) {
+			qualifications=radioBenKe.getText().toString();
+		}
+		
 		return true;
 		// TODO Auto-generated method stub
 

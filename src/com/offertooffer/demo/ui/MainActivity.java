@@ -51,6 +51,8 @@ public class MainActivity extends ActivityBase implements EventListener{
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
+		
+		
 		//开启定时检测服务（单位为秒）-在这里检测后台是否还有未读的消息，有的话就取出来
 		//如果你觉得检测服务比较耗流量和电量，你也可以去掉这句话-同时还有onDestory方法里面的stopPollService方法
 		BmobChat.getInstance(this).startPollService(20);
