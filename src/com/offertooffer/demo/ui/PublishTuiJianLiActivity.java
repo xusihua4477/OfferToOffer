@@ -13,7 +13,7 @@ import cn.bmob.v3.listener.SaveListener;
 
 import com.offertooffer.demo.R;
 import com.offertooffer.demo.adapter.base.ViewHolder;
-import com.offertooffer.demo.bean.Record_ZhaoPin;
+import com.offertooffer.demo.bean.Record_YingPin;
 
 /**
  * 设置昵称和性别
@@ -24,7 +24,7 @@ import com.offertooffer.demo.bean.Record_ZhaoPin;
  * @date 2014-6-7 下午4:03:40
  */
 
-public class CreateNewSimpleJianLiActivity extends ActivityBase {
+public class PublishTuiJianLiActivity extends ActivityBase {
 
 	EditText etAge;
 	EditText etExperience;
@@ -33,7 +33,7 @@ public class CreateNewSimpleJianLiActivity extends ActivityBase {
 	RadioButton radioDaZhuan;
 	RadioButton radioBenKe;
 	RadioButton radioShuoShi;
-
+	private EditText etTuijian_reasion;
 	Spinner spinner_citys;
 	EditText etZhongjiefei;
 	View view;
@@ -44,7 +44,7 @@ public class CreateNewSimpleJianLiActivity extends ActivityBase {
 	private Boolean sex;
 	private String city;
 	private String qualifications;
-	private EditText etTuijian_reasion;
+
 	private String recommend_reason;
 
 	@Override
@@ -80,8 +80,8 @@ public class CreateNewSimpleJianLiActivity extends ActivityBase {
 		BmobChatUser currentUser = userManager.getCurrentUser();
 		
 		String objectId = currentUser.getObjectId();
-		Record_ZhaoPin record_ZhaoPin = new Record_ZhaoPin(city, objectId, recommend_reason, age, experience, salary, zhongjiefei, sex, qualifications);
-		record_ZhaoPin.save(this, new SaveListener() {
+		Record_YingPin yingPinlist = new Record_YingPin(city, objectId, recommend_reason, age, experience, salary, zhongjiefei, sex, qualifications);
+		yingPinlist.save(this, new SaveListener() {
 			
 			@Override
 			public void onSuccess() {

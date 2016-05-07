@@ -36,6 +36,48 @@ public class OfferUser extends User {
 
 
 
+	public int getCredit() {
+		return credit;
+	}
+
+
+
+
+	public void setCredit(int credit) {
+		this.credit = credit;
+	}
+
+
+
+
+	public int getUserType() {
+		return userType;
+	}
+
+
+
+
+	public void setUserType(int userType) {
+		this.userType = userType;
+	}
+
+
+
+
+	public List<PingJia> getPingjia_list() {
+		return pingjia_list;
+	}
+
+
+
+
+	public void setPingjia_list(List<PingJia> pingjia_list) {
+		this.pingjia_list = pingjia_list;
+	}
+
+
+
+
 	public OfferUser() {
 		super();
 		// TODO Auto-generated constructor stub

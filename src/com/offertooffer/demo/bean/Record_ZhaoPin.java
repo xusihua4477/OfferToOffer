@@ -2,19 +2,25 @@ package com.offertooffer.demo.bean;
 
 import cn.bmob.v3.BmobObject;
 
+/**
+ * 
+ * @author asan 存储企业发布的招聘记录
+ * 
+ */
 public class Record_ZhaoPin extends BmobObject {
 	String city;
 	/**
 	 * 发布者的id
 	 */
 	String object_id;
-	String recommend_reason;
 	/**
-	 * 被推荐人的年龄
+	 * 对求职者的具体要求
 	 */
-	int age;
+	String description;
+
 	int work_years;
-    int  salary;
+	int salary_least;
+	int salary_most;
 	/**
 	 * 悬赏金额
 	 */
@@ -25,116 +31,123 @@ public class Record_ZhaoPin extends BmobObject {
 	 */
 	String qualifications;
 
+	/**
+	 * 是否已经向本公司提交悬赏金(悬赏金) 赏金压在公司,等待成交
+	 */
+	Boolean isOfferdToMe = false;
+	/**
+	 * 是否已经向本公司提交悬赏金(悬赏金) 赏金压在公司,等待成交
+	 */
+	Boolean is_offerdToZhongJie = false;
 
-	public Record_ZhaoPin(String city, String object_id,
-			String recommend_reason, int age, int work_years, int salary,
-			int zhongjiefei, Boolean sex2, String qualifications) {
+	public Record_ZhaoPin(String city, String object_id, String description,
+			int work_years, int salary_least, int salary_most, int zhongjiefei,
+			String qualifications) {
 		super();
 		this.city = city;
 		this.object_id = object_id;
-		this.recommend_reason = recommend_reason;
-		this.age = age;
+		this.description = description;
 		this.work_years = work_years;
-		this.salary = salary;
+		this.salary_least = salary_least;
+		this.salary_most = salary_most;
 		this.zhongjiefei = zhongjiefei;
-		this.sex = sex2;
 		this.qualifications = qualifications;
 	}
 
+	public Record_ZhaoPin() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
 
 	public String getCity() {
 		return city;
 	}
 
-
 	public void setCity(String city) {
 		this.city = city;
 	}
-
 
 	public String getObject_id() {
 		return object_id;
 	}
 
-
 	public void setObject_id(String object_id) {
 		this.object_id = object_id;
 	}
 
-
-	public String getRecommend_reason() {
-		return recommend_reason;
+	public String getDescription() {
+		return description;
 	}
 
-
-	public void setRecommend_reason(String recommend_reason) {
-		this.recommend_reason = recommend_reason;
+	public void setDescription(String description) {
+		this.description = description;
 	}
-
-
-	public int getAge() {
-		return age;
-	}
-
-
-	public void setAge(int age) {
-		this.age = age;
-	}
-
 
 	public int getWork_years() {
 		return work_years;
 	}
 
-
 	public void setWork_years(int work_years) {
 		this.work_years = work_years;
 	}
 
-
-	public int getSalary() {
-		return salary;
+	public int getSalary_least() {
+		return salary_least;
 	}
 
-
-	public void setSalary(int salary) {
-		this.salary = salary;
+	public void setSalary_least(int salary_least) {
+		this.salary_least = salary_least;
 	}
 
+	public int getSalary_most() {
+		return salary_most;
+	}
+
+	public void setSalary_most(int salary_most) {
+		this.salary_most = salary_most;
+	}
 
 	public int getZhongjiefei() {
 		return zhongjiefei;
 	}
 
-
 	public void setZhongjiefei(int zhongjiefei) {
 		this.zhongjiefei = zhongjiefei;
 	}
-
 
 	public Boolean getSex() {
 		return sex;
 	}
 
-
 	public void setSex(Boolean sex) {
 		this.sex = sex;
 	}
-
 
 	public String getQualifications() {
 		return qualifications;
 	}
 
-
 	public void setQualifications(String qualifications) {
 		this.qualifications = qualifications;
 	}
 
-	
-	
-	
-	
+	public Boolean getIsOfferdToMe() {
+		return isOfferdToMe;
+	}
+
+	public void setIsOfferdToMe(Boolean isOfferdToMe) {
+		this.isOfferdToMe = isOfferdToMe;
+	}
+
+	public Boolean getIs_offerdToZhongJie() {
+		return is_offerdToZhongJie;
+	}
+
+	public void setIs_offerdToZhongJie(Boolean is_offerdToZhongJie) {
+		this.is_offerdToZhongJie = is_offerdToZhongJie;
+	}
+
+
 	
 
 }

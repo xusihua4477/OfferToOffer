@@ -137,7 +137,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 				updateUserInfos();
 				progress.dismiss();
 			//	Intent intent = new Intent(LoginActivity.this,MainActivity.class);
-				Intent intent = new Intent(LoginActivity.this,FirstActivity.class);
+				Intent intent = new Intent(LoginActivity.this,MainActivity.class);
 				startActivity(intent);
 				finish();
 			}

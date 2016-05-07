@@ -101,7 +101,7 @@
         
         <activity android:name="com.offertooffer.demo.ui.LoginActivity" />
         <activity android:name="com.offertooffer.demo.ui.FirstActivity" />
-        <activity android:name="com.offertooffer.demo.ui.PublishTuiJianActivity" />
+        <activity android:name="com.offertooffer.demo.ui.PublishZhaoPinActivity" />
         
         <activity android:name="com.offertooffer.demo.ui.LocationActivity" />
         
@@ -114,7 +114,7 @@
             android:windowSoftInputMode="stateHidden|adjustPan" />
         
         <activity android:name="com.offertooffer.demo.ui.NewFriendActivity" />
-        <activity android:name="com.offertooffer.demo.ui.CreateNewSimpleJianLiActivity" />
+        <activity android:name="com.offertooffer.demo.ui.PublishTuiJianLiActivity" />
         <activity android:name="com.offertooffer.demo.ui.NearPeopleActivity" />
         
         <activity android:name="com.offertooffer.demo.ui.UpdateInfoActivity" />

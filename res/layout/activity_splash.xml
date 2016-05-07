@@ -1,15 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical" >
-     <TextView
+    android:layout_height="match_parent" >
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:gravity="center"
+         >
+
+        <TextView
             android:id="@+id/iv_icon1"
-            android:layout_centerInParent="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="30dp"
-            android:textSize="30sp"
+            android:text="OfferToOffer"
             android:textColor="@android:color/holo_blue_dark"
-            android:text="OfferToOffer"/>
+            android:textSize="30sp" />
+         <TextView
+            android:id="@+id/iv_icon2"
+            android:layout_below="@+id/iv_icon1"
+            android:layout_centerHorizontal="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="version"
+            android:textColor="@android:color/holo_blue_dark"
+            android:textSize="20sp" />
+    </RelativeLayout>
+
 </RelativeLayout>
