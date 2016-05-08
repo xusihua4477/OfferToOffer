@@ -1,10 +1,12 @@
 package com.offertooffer.demo.ui;
 
+import java.util.List;
+
+import android.annotation.SuppressLint;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -13,25 +15,31 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 import cn.bmob.im.BmobChat;
 import cn.bmob.im.BmobChatManager;
 import cn.bmob.im.BmobNotifyManager;
-import cn.bmob.im.BmobUserManager;
 import cn.bmob.im.bean.BmobChatUser;
 import cn.bmob.im.bean.BmobInvitation;
 import cn.bmob.im.bean.BmobMsg;
 import cn.bmob.im.config.BmobConfig;
 import cn.bmob.im.db.BmobDB;
 import cn.bmob.im.inteface.EventListener;
+import cn.bmob.v3.BmobQuery;
+import cn.bmob.v3.BmobQuery.CachePolicy;
+import cn.bmob.v3.listener.FindListener;
 
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 import com.lidroid.xutils.BitmapUtils;
 import com.offertooffer.demo.CustomApplcation;
 import com.offertooffer.demo.MyMessageReceiver;
 import com.offertooffer.demo.R;
-import com.offertooffer.demo.bean.OfferUser;
+import com.offertooffer.demo.adapter.ShowTuiJianAdapter;
+import com.offertooffer.demo.bean.Record_YingPin;
+import com.offertooffer.demo.bean.Record_ZhaoPin;
 import com.offertooffer.demo.ui.fragment.ContactFragment;
 import com.offertooffer.demo.ui.fragment.RecentFragment;
 import com.offertooffer.demo.ui.fragment.SettingsFragment;
@@ -85,7 +93,7 @@ public class MainActivity extends ActivityBase implements EventListener {
 		slidingMenu.setAlwaysDrawnWithCacheEnabled(true);
 		// slidingMenu.setBehindOffset(100);
 		slidingMenu.setBehindWidth(400);
-		 view_sldingMunu = View.inflate(getApplicationContext(),
+		view_sldingMunu = View.inflate(getApplicationContext(),
 				R.layout.slidingmenu, null);
 
 		setSlidingMenuOnitemListener(view_sldingMunu);
@@ -97,21 +105,20 @@ public class MainActivity extends ActivityBase implements EventListener {
 	private void setSlidingmenu_UserInfo(View view11) {
 		// TODO Auto-generated method stub
 		BmobChatUser currentUser = userManager.getCurrentUser();
-		ImageView ivUser_slidingMenu = (ImageView) view11.findViewById(R.id.iv_headIv);
-		 TextView tvName = (TextView) view11.findViewById(R.id.tvLoginName);
-		if (currentUser.getUsername()!=null) {
-			 tvName.setText(currentUser.getUsername());
+		ImageView ivUser_slidingMenu = (ImageView) view11
+				.findViewById(R.id.iv_headIv);
+		TextView tvName = (TextView) view11.findViewById(R.id.tvLoginName);
+		if (currentUser.getUsername() != null) {
+			tvName.setText(currentUser.getUsername());
 		}
-		
-		 
-		 
-		 BitmapUtils bitmapUtils=new BitmapUtils(getApplicationContext());
-		
-		String uri=currentUser.getAvatar();
-		bitmapUtils.display(ivUser_slidingMenu, uri );
-		
-	//	ivUser_slidingMenu.setImageBitmap(bm);
-		
+
+		BitmapUtils bitmapUtils = new BitmapUtils(getApplicationContext());
+
+		String uri = currentUser.getAvatar();
+		bitmapUtils.display(ivUser_slidingMenu, uri);
+
+		// ivUser_slidingMenu.setImageBitmap(bm);
+
 	}
 
 	private void setSlidingMenuOnitemListener(View view_sldingMunu) {
@@ -122,6 +129,8 @@ public class MainActivity extends ActivityBase implements EventListener {
 			final View view = fl.getChildAt(i);
 
 			view.setOnClickListener(new OnClickListener() {
+
+				private ZhaoPinListFragment zhaoPinListFragment;
 
 				@Override
 				public void onClick(View v) {
@@ -142,34 +151,122 @@ public class MainActivity extends ActivityBase implements EventListener {
 							break;
 						// 对应 发布推荐人信息
 						case 3:
-							i = new Intent(MainActivity.this,
-									PublishTuiJianLiActivity.class);
-							startActivity(i);
+
+							/*
+							 * i = new Intent(MainActivity.this,
+							 * PublishTuiJianLiActivity.class);
+							 * startActivity(i);
+							 */
 							break;
-								
-							// 对应 浏览招聘信息
+
+						// 对应 浏览招聘信息
 						case 4:
+							/*
+							 * i = new Intent(MainActivity.this,
+							 * ShowZhaoPinActivity.class); startActivity(i);
+							 */
+							zhaoPinListFragment = (ZhaoPinListFragment) getSupportFragmentManager()
+									.findFragmentByTag("zhaopinListFragment");
+							initTopBarForOnlyTitle("招聘信息");
+							setDataForZhaoPinlist(zhaoPinListFragment.lvForXinxi,MainActivity.this);
+							slidingMenu.showContent();
 
 							break;
-							// 对应 浏览荐人信息
+						// 对应 浏览荐人信息
 						case 5:
+							initTopBarForOnlyTitle("人才推荐信息");
+							zhaoPinListFragment = (ZhaoPinListFragment) getSupportFragmentManager()
+									.findFragmentByTag("zhaopinListFragment");
 
+							setDataForTuijianlist(
+									zhaoPinListFragment.lvForXinxi,
+									MainActivity.this);
+							slidingMenu.showContent();
+							/*
+							 * i = new Intent(MainActivity.this,
+							 * ShowTuiJianActivity.class); startActivity(i);
+							 */
 							break;
-							// 对应 我发布的信息
+						// 对应 我发布的信息
 						case 6:
 
 							break;
-							// 对应 通知信息
+						// 对应 通知信息
 						case 7:
 
 							break;
 						default:
+							slidingMenu.toggle();
 							break;
 						}
 					}
 				}
 			});
 		}
+	}
+
+	public void setDataForTuijianlist(final ListView lvForXinxi,
+			final Context context) {
+
+		final BmobQuery<Record_YingPin> bmobQuery = new BmobQuery<Record_YingPin>();
+		bmobQuery.order("createdAt");
+		// 先判断是否有缓存
+		boolean isCache = bmobQuery.hasCachedResult(context,
+				Record_YingPin.class);
+		if (isCache) {
+			bmobQuery.setCachePolicy(CachePolicy.CACHE_ELSE_NETWORK); // 先从缓存取数据，如果没有的话，再从网络取。
+		} else {
+			bmobQuery.setCachePolicy(CachePolicy.NETWORK_ELSE_CACHE); // 如果没有缓存的话，则先从网络中取
+		}
+		bmobQuery.findObjects(context, new FindListener<Record_YingPin>() {
+			@SuppressLint("ShowToast")
+			@Override
+			public void onError(int arg0, String arg1) {
+				Toast.makeText(context, arg1, 3000).show();
+
+			}
+
+			@Override
+			public void onSuccess(List<Record_YingPin> lists) {
+				// TODO Auto-generated method stub
+				zhaopinListFragment.setTuijianlvAdapter(lists);
+
+			}
+
+		});
+
+	}
+
+	public void setDataForZhaoPinlist(final ListView lvForXinxi,
+			final Context context) {
+
+		final BmobQuery<Record_ZhaoPin> bmobQuery = new BmobQuery<Record_ZhaoPin>();
+		bmobQuery.order("createdAt");
+		// 先判断是否有缓存
+		boolean isCache = bmobQuery.hasCachedResult(context,
+				Record_ZhaoPin.class);
+			bmobQuery.setCachePolicy(CachePolicy.NETWORK_ELSE_CACHE); // 如果没有缓存的话，则先从网络中取
+		
+		bmobQuery.findObjects(context, new FindListener<Record_ZhaoPin>() {
+			@SuppressLint("ShowToast")
+			@Override
+			public void onError(int arg0, String arg1) {
+				Toast.makeText(context, arg1, 3000).show();
+
+			}
+
+			@Override
+			public void onSuccess(List<Record_ZhaoPin> lists) {
+				// TODO Auto-generated method stub
+				System.out.println(lists.get(0).toString());
+				System.out.println(lists.get(0).toString());
+				System.out.println(lists.get(0).toString());
+				zhaopinListFragment.setZhaopinlvAdapter(lists);
+
+			}
+
+		});
+
 	}
 
 	private void initView() {
@@ -193,11 +290,12 @@ public class MainActivity extends ActivityBase implements EventListener {
 		fragments = new Fragment[] { recentFragment, contactFragment,
 				settingFragment, zhaopinListFragment };
 		// 添加显示第一个fragment
-		getSupportFragmentManager().beginTransaction()
-				.add(R.id.fragment_container, recentFragment)
+		getSupportFragmentManager()
+				.beginTransaction()
+				.add(R.id.fragment_container, recentFragment, "recentFragment")
 				.hide(recentFragment)
-				.add(R.id.fragment_container, zhaopinListFragment)
-				.hide(zhaopinListFragment)
+				.add(R.id.fragment_container, zhaopinListFragment,
+						"zhaopinListFragment").hide(zhaopinListFragment)
 				.add(R.id.fragment_container, contactFragment)
 				.hide(contactFragment).show(zhaopinListFragment).commit();
 	}

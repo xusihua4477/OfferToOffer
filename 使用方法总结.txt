@@ -4,10 +4,127 @@ loved by a man,  You will become the owner of this person.
 yesterday，I met a gentle girl.I want to be a  slave of her,but she don‘t thank so。
 
 
+发起聊天
+
+Intent intent = new Intent(this, ChatActivity.class);
+			intent.putExtra("user", user);
+			startAnimActivity(intent);
 
 
-yseterday,
+加入黑名单
 
+	private void showBlackDialog(final String username) {
+		DialogTips dialog = new DialogTips(this, "加入黑名单",
+				"加入黑名单，你将不再收到对方的消息，确定要继续吗？", "确定", true, true);
+		dialog.SetOnSuccessListener(new DialogInterface.OnClickListener() {
+			public void onClick(DialogInterface dialogInterface, int userId) {
+				// 添加到黑名单列表
+				userManager.addBlack(username, new UpdateListener() {
+
+					@Override
+					public void onSuccess() {
+						// TODO Auto-generated method stub
+						ShowToast("黑名单添加成功!");
+						btn_back.setVisibility(View.GONE);
+						layout_black_tips.setVisibility(View.VISIBLE);
+						// 重新设置下内存中保存的好友列表
+						CustomApplcation.getInstance().setContactList(CollectionUtils.list2map(BmobDB.create(SetMyInfoActivity.this).getContactList()));
+					}
+
+					@Override
+					public void onFailure(int arg0, String arg1) {
+						// TODO Auto-generated method stub
+						ShowToast("黑名单添加失败:" + arg1);
+					}
+				});
+			}
+		});
+		// 显示确认对话框
+		dialog.show();
+		dialog = null;
+	}
+
+
+更新用户头像
+	private void uploadAvatar() {
+		BmobLog.i("头像地址：" + path);
+		final BmobFile bmobFile = new BmobFile(new File(path));
+		bmobFile.upload(this, new UploadFileListener() {
+
+			@Override
+			public void onSuccess() {
+				// TODO Auto-generated method stub
+				String url = bmobFile.getFileUrl(SetMyInfoActivity.this);
+				// 更新BmobUser对象
+				updateUserAvatar(url);
+			}
+
+			@Override
+			public void onProgress(Integer arg0) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void onFailure(int arg0, String msg) {
+				// TODO Auto-generated method stub
+				ShowToast("头像上传失败：" + msg);
+			}
+		});
+	}
+
+	private void updateUserAvatar(final String url) {
+		User  u =new User();
+		u.setAvatar(url);
+		updateUserData(u,new UpdateListener() {
+			@Override
+			public void onSuccess() {
+				// TODO Auto-generated method stub
+				ShowToast("头像更新成功！");
+				// 更新头像
+				refreshAvatar(url);
+			}
+
+			@Override
+			public void onFailure(int code, String msg) {
+				// TODO Auto-generated method stub
+				ShowToast("头像更新失败：" + msg);
+			}
+		});
+	}
+
+	String path;
+
+	/**
+	 * 保存裁剪的头像
+	 * 
+	 * @param data
+	 */
+	private void saveCropAvator(Intent data) {
+		Bundle extras = data.getExtras();
+		if (extras != null) {
+			Bitmap bitmap = extras.getParcelable("data");
+			Log.i("life", "avatar - bitmap = " + bitmap);
+			if (bitmap != null) {
+				bitmap = PhotoUtil.toRoundCorner(bitmap, 10);
+				if (isFromCamera && degree != 0) {
+					bitmap = PhotoUtil.rotaingImageView(degree, bitmap);
+				}
+				iv_set_avator.setImageBitmap(bitmap);
+				// 保存图片
+				String filename = new SimpleDateFormat("yyMMddHHmmss")
+						.format(new Date())+".png";
+				path = BmobConstants.MyAvatarDir + filename;
+				PhotoUtil.saveBitmap(BmobConstants.MyAvatarDir, filename,
+						bitmap, true);
+				// 上传头像
+				if (bitmap != null && bitmap.isRecycled()) {
+					bitmap.recycle();
+				}
+			}
+		}
+	}
+	
 
 发起聊天
 	Intent intent = new Intent(this, ChatActivity.class);

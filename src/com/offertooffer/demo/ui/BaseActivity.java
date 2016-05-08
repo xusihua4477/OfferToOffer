@@ -48,9 +48,6 @@ public class BaseActivity extends FragmentActivity {
 	protected int mScreenWidth;
 	protected int mScreenHeight;
 
-	public void findViewById_Mine(int id) {
-
-	}
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {

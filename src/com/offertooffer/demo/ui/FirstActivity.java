@@ -1,20 +1,24 @@
 package com.offertooffer.demo.ui;
 
+import java.util.List;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ListView;
 
 import com.offertooffer.demo.R;
+import com.offertooffer.demo.adapter.ShowTuiJianAdapter;
+import com.offertooffer.demo.bean.Record_YingPin;
 
 public class FirstActivity extends Activity{
-	
+	ListView lv;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
-	
-	setContentView(R.layout.activity_first);
+
 	
 	
 	}

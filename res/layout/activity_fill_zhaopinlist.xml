@@ -15,7 +15,7 @@
         android:layout_height="0dp"
         android:layout_weight="1"
         android:orientation="vertical"
-        android:padding="5dp" >
+        android:padding="2dp" >
 
     <!--     <LinearLayout
             android:layout_width="match_parent"
@@ -189,7 +189,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="45dp"
+            android:layout_height="50dp"
             android:layout_marginTop="2dp"
             android:orientation="horizontal" >
 
@@ -199,19 +199,37 @@
 
             <Spinner
                 android:id="@+id/spinner_citys"
-                android:layout_width="wrap_content"
+                android:layout_width="50dp"
                 android:layout_height="match_parent"
                 android:entries="@array/citys" />
         </LinearLayout>
-
-        <LinearLayout
+   <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="40dp"
+            android:layout_marginTop="1dp"
+            android:orientation="horizontal" >
+
+            <TextView
+                style="@style/tvStyle"
+                android:text="职位" />
+
+            <EditText
+                android:id="@+id/etZhiwei"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="招什么人" />
+
+        </LinearLayout>
+        
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
             android:layout_marginTop="2dp"
             android:orientation="horizontal" >
 
             <TextView
                 style="@style/tvStyle"
+                android:maxEms="2"
                 android:text="悬赏金额" />
 
             <EditText
@@ -237,13 +255,13 @@
                 android:visibility="invisible" />
 
             <Button
-                android:layout_width="100dp"
-                android:layout_height="30dp"
+                android:layout_width="110dp"
+                android:layout_height="35dp"
                 android:layout_gravity="bottom"
                 android:background="@drawable/btn_login_selector"
                 android:gravity="center"
                 android:onClick="btn_Publish"
-                android:padding="5dp"
+              
                 android:text="发布"
                 android:textColor="#fff" />
 
@@ -260,7 +278,7 @@
                 android:visibility="invisible" />
 
             <Button
-                android:layout_width="match_parent"
+                android:layout_width="110dp"
                 android:layout_height="35dp"
                 android:layout_gravity="bottom"
                 android:background="@android:color/darker_gray"

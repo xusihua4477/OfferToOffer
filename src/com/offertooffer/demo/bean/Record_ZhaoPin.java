@@ -1,6 +1,10 @@
 package com.offertooffer.demo.bean;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+
 import cn.bmob.v3.BmobObject;
+import cn.bmob.v3.a.a.This;
 
 /**
  * 
@@ -13,10 +17,20 @@ public class Record_ZhaoPin extends BmobObject {
 	 * 发布者的id
 	 */
 	String object_id;
+	String company_name;
+	String zhiwei;
 	/**
 	 * 对求职者的具体要求
 	 */
 	String description;
+
+	public String getZhiwei() {
+		return zhiwei;
+	}
+
+	public void setZhiwei(String zhiwei) {
+		this.zhiwei = zhiwei;
+	}
 
 	int work_years;
 	int salary_least;
@@ -25,7 +39,7 @@ public class Record_ZhaoPin extends BmobObject {
 	 * 悬赏金额
 	 */
 	int zhongjiefei;
-	Boolean sex;
+	Boolean sex=true;
 	/**
 	 * xueli,学历
 	 */
@@ -42,7 +56,7 @@ public class Record_ZhaoPin extends BmobObject {
 
 	public Record_ZhaoPin(String city, String object_id, String description,
 			int work_years, int salary_least, int salary_most, int zhongjiefei,
-			String qualifications) {
+			String qualifications,String zhiwei,String company_name) {
 		super();
 		this.city = city;
 		this.object_id = object_id;
@@ -51,7 +65,9 @@ public class Record_ZhaoPin extends BmobObject {
 		this.salary_least = salary_least;
 		this.salary_most = salary_most;
 		this.zhongjiefei = zhongjiefei;
+		this.company_name=company_name;
 		this.qualifications = qualifications;
+		this.zhiwei=zhiwei;
 	}
 
 	public Record_ZhaoPin() {
@@ -145,6 +161,21 @@ public class Record_ZhaoPin extends BmobObject {
 
 	public void setIs_offerdToZhongJie(Boolean is_offerdToZhongJie) {
 		this.is_offerdToZhongJie = is_offerdToZhongJie;
+	}
+
+	@Override
+	public String toString() {
+		String xingbie=null;
+		if (this.sex) {
+			xingbie="男";
+		} else {
+			xingbie="女";
+
+		}
+	
+		return  work_years + "年以上/月薪"
+				+ salary_least + "到" + salary_most + "k /"
+				+ xingbie + "/学历 " + qualifications ;
 	}
 
 

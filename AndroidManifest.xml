@@ -124,6 +124,8 @@
             android:windowSoftInputMode="stateAlwaysHidden|adjustResize" />
         
         <activity android:name="com.offertooffer.demo.ui.SetMyInfoActivity" />
+        <activity android:name="com.offertooffer.demo.ui.ShowTuiJianActivity" />
+        <activity android:name="com.offertooffer.demo.ui.ShowZhaoPinActivity" />
         
         <activity
             android:name="com.offertooffer.demo.ui.RegisterActivity"

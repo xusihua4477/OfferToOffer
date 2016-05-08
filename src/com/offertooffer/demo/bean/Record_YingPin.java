@@ -29,12 +29,25 @@ public class Record_YingPin extends BmobObject {
 	 * xueli,学历
 	 */
 	String qualifications;
+/**
+ * 推荐人姓名
+ */
+String tuijianren;
+	public String getTuijianren_name() {
+	return tuijianren;
+}
+
+
+public void setTuijianren_name(String tuijianren_name) {
+	this.tuijianren = tuijianren_name;
+}
 
 
 	public Record_YingPin(String city, String object_id,
 			String recommend_reason, int age, int work_years, int salary,
-			int zhongjiefei, Boolean sex2, String qualifications) {
+			int zhongjiefei, Boolean sex2, String qualifications,String tuijianren) {
 		super();
+		this.tuijianren=tuijianren;
 		this.city = city;
 		this.object_id = object_id;
 		this.recommend_reason = recommend_reason;

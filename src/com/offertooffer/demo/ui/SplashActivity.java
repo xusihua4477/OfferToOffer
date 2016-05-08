@@ -5,9 +5,13 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.content.pm.PackageManager.NameNotFoundException;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.widget.TextView;
 import cn.bmob.im.BmobChat;
 
 import com.baidu.location.LocationClient;
@@ -33,14 +37,18 @@ public class SplashActivity extends BaseActivity {
 
 	// 定位获取当前用户的地理位置
 	private LocationClient mLocationClient;
-
+	
 	private BaiduReceiver mReceiver;// 注册广播接收器，用于监听网络以及验证key
+	private TextView tvVersion;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
+		
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_splash);
+		tvVersion = (TextView) findViewById(R.id.tv_version);
+		tvVersion.setText("版本:" + getVersionName());
 		//可设置调试模式，当为true的时候，会在logcat的BmobChat下输出一些日志，包括推送服务是否正常运行，如果服务端返回错误，也会一并打印出来。方便开发者调试
 		BmobChat.DEBUG_MODE = true;
 		//BmobIM SDK初始化--只需要这一段代码即可完成初始化
@@ -54,6 +62,26 @@ public class SplashActivity extends BaseActivity {
 		iFilter.addAction(SDKInitializer.SDK_BROADCAST_ACTION_STRING_NETWORK_ERROR);
 		mReceiver = new BaiduReceiver();
 		registerReceiver(mReceiver, iFilter);
+	}
+	private String getVersionName() {
+		PackageManager packageManager = getPackageManager();
+		try {
+			PackageInfo packageInfo = packageManager.getPackageInfo(
+					getPackageName(), 0);// 获取包的信息
+
+			int versionCode = packageInfo.versionCode;
+			String versionName = packageInfo.versionName;
+
+			System.out.println("versionName=" + versionName + ";versionCode="
+					+ versionCode);
+
+			return versionName;
+		} catch (NameNotFoundException e) {
+			// 没有找到包名的时候会走此异常
+			e.printStackTrace();
+		}
+
+		return "";
 	}
 
 	@Override

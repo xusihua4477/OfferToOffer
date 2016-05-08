@@ -4,8 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
+import android.text.GetChars;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,80 +27,122 @@ import cn.bmob.v3.BmobObject;
 import cn.bmob.v3.listener.SaveListener;
 
 import com.offertooffer.demo.R;
+import com.offertooffer.demo.adapter.ShowTuiJianAdapter;
+import com.offertooffer.demo.adapter.ShowZhaoPinAdapter;
 import com.offertooffer.demo.adapter.UserFriendAdapter;
 import com.offertooffer.demo.bean.OfferUser;
 import com.offertooffer.demo.bean.PingJia;
+import com.offertooffer.demo.bean.Record_YingPin;
+import com.offertooffer.demo.bean.Record_ZhaoPin;
 import com.offertooffer.demo.bean.User;
 import com.offertooffer.demo.ui.FragmentBase;
+import com.offertooffer.demo.ui.MainActivity;
 import com.offertooffer.demo.util.CharacterParser;
 import com.offertooffer.demo.view.ClearEditText;
 import com.offertooffer.demo.view.MyLetterView;
 
 /**
  * 联系人
+ * 
  * @ClassName: ContactFragment
  * @Description: TODO
  * @author smile
  * @date 2014-6-7 下午1:02:05
  */
 @SuppressLint("DefaultLocale")
-public class ZhaoPinListFragment extends FragmentBase implements OnItemClickListener,OnItemLongClickListener{
+public class ZhaoPinListFragment extends FragmentBase  {
 
 	ClearEditText mClearEditText;
-
+	public ListView lvForXinxi;
 	TextView dialog;
 
-	ListView listForXinxi;
-	MyLetterView right_letter;
-
-	private UserFriendAdapter userAdapter;// 好友
-
-	List<User> friends = new ArrayList<User>();
-
 	private InputMethodManager inputMethodManager;
-	
+
 	/**
 	 * 汉字转换成拼音的类
 	 */
 	private CharacterParser characterParser;
+	private MainActivity mainActivity;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
-		
-			
-	
-		
-		return inflater.inflate(R.layout.fragment_zhaopin_list, container, false);
+
+		System.out.println();
+
+		return inflater.inflate(R.layout.fragment_zhaopin_list, container,
+				false);
+
 	}
 
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onActivityCreated(savedInstanceState);
-		inputMethodManager = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
-	
-System.out.println("onActivityCreated");
-System.out.println("onActivityCreated");
-System.out.println("onActivityCreated");
-initTopBarForOnlyTitle("信息列表");
-}
-
-	@Override
-	public boolean onItemLongClick(AdapterView<?> parent, View view,
-			int position, long id) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public void onItemClick(AdapterView<?> parent, View view, int position,
-			long id) {
-		// TODO Auto-generated method stub
 		
+		
+		initTopBarForOnlyTitle("信息列表");
+		initView();
+		//默认让本页面的listview 显示招聘列表
+		mainActivity.setDataForZhaoPinlist(lvForXinxi, getActivity().getApplicationContext());
 	}
 
-	
+	@Override
+	public void onAttach(Activity activity) {
+		// TODO Auto-generated method stub
+		super.onAttach(activity);
+		mainActivity = (MainActivity) activity;
+	}
+
+	private void initView() {
+		// TODO Auto-generated method stub
+		lvForXinxi = (ListView) findViewById(R.id.lvForXinxi);
+	}
+
+
+
+	public void setTuijianlvAdapter(List<Record_YingPin> lists) {
+		// TODO Auto-generated method stub
+		MainActivity abcd = (MainActivity) getActivity();
+
+		ShowTuiJianAdapter showTuiJianAdapter = new ShowTuiJianAdapter(abcd,
+				lists, new ShowTuiJianAdapter.OnItem_onclickLister() {
+
+					@Override
+					public void btn_connect_zhongjie(String zhongjie_id) {
+						// TODO Auto-generated method stub
+						System.out.println("btn_connect_zhongjie");
+						System.out.println("btn_connect_zhongjie");
+						System.out.println("btn_connect_zhongjie");
+
+					}
+
+				});
+
+		lvForXinxi.setAdapter(showTuiJianAdapter);
+		lvForXinxi.invalidate();
+	}
+
+	public void setZhaopinlvAdapter(List<Record_ZhaoPin> lists) {
+		MainActivity abcd = (MainActivity) getActivity();
+		//创建适配器并监听每个item中的招聘者单击事件
+		ShowZhaoPinAdapter showTuiJianAdapter = new ShowZhaoPinAdapter(mainActivity,
+				lists, new ShowZhaoPinAdapter.OnItem_onclickLister() {
+
+					@Override
+					public void btn_connect_zhaopinzhe(String zhongjie_id) {
+						// TODO Auto-generated method stub
+								System.out.println("btn_connect_zhaopinzhe");
+								System.out.println("btn_connect_zhaopinzhe");
+								System.out.println("btn_connect_zhaopinzhe");
+					}
+
+				});
+
+		lvForXinxi.setAdapter(showTuiJianAdapter);
+		lvForXinxi.invalidate();
+   
+	}
 
 }

@@ -43,6 +43,7 @@ public class PublishTuiJianLiActivity extends ActivityBase {
 	private int zhongjiefei;
 	private Boolean sex;
 	private String city;
+	private String tuijianren_name;
 	private String qualifications;
 
 	private String recommend_reason;
@@ -78,9 +79,10 @@ public class PublishTuiJianLiActivity extends ActivityBase {
 
 		userManager = BmobUserManager.getInstance(getApplicationContext());
 		BmobChatUser currentUser = userManager.getCurrentUser();
+		String username = currentUser.getUsername();
 		
 		String objectId = currentUser.getObjectId();
-		Record_YingPin yingPinlist = new Record_YingPin(city, objectId, recommend_reason, age, experience, salary, zhongjiefei, sex, qualifications);
+		Record_YingPin yingPinlist = new Record_YingPin(city, objectId, recommend_reason, age, experience, salary, zhongjiefei, sex, qualifications,username);
 		yingPinlist.save(this, new SaveListener() {
 			
 			@Override

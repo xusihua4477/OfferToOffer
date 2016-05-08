@@ -1,19 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/customer_item_forShowYinhpinlist"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical" >
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="35dp"
+        android:layout_height="40dp"
         android:layout_margin="5dp"
         android:orientation="horizontal" >
 
         <TextView
             android:id="@+id/tv_creditForlv"
             android:layout_width="wrap_content"
-            android:layout_height="30dp"
+            android:layout_height="35dp"
             android:background="@drawable/btn_login_selector"
             android:clickable="true"
             android:focusable="true"
@@ -27,7 +28,7 @@
         <TextView
             android:id="@+id/tv_cityForlv"
             android:layout_width="wrap_content"
-            android:layout_height="30dp"
+            android:layout_height="35dp"
             android:layout_marginLeft="3dp"
             android:background="@drawable/btn_login_n"
             android:clickable="true"
@@ -42,7 +43,7 @@
         <TextView
             android:id="@+id/tv_zhongjiefeiForlv"
             android:layout_width="wrap_content"
-            android:layout_height="30dp"
+            android:layout_height="35dp"
             android:layout_marginLeft="3dp"
             android:background="@drawable/btn_login_n"
             android:clickable="true"
@@ -66,27 +67,28 @@
             android:paddingRight="3dp"
             android:text="技术经理"
             android:textColor="@color/base_color_text_gray"
-            android:textSize="@dimen/text_size_small" />
+            android:textSize="16sp" />
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:layout_margin="5dp"
+        android:id="@+id/llayoutForTuiJianContent"
+        android:clickable="true"
         android:orientation="horizontal" >
 
         <TextView
             android:id="@+id/tv_contentForlv"
             android:layout_width="wrap_content"
             android:layout_height="30dp"
-            android:clickable="true"
-            android:focusable="true"
+            
             android:gravity="center"
             android:paddingLeft="3dp"
             android:paddingRight="3dp"
             android:text="5-10k  3-5年/本科/男"
             android:textColor="@android:color/holo_green_light"
-            android:textSize="@dimen/text_size_small" />
+            android:textSize="18sp" />
     </LinearLayout>
 
     <RelativeLayout
@@ -100,15 +102,15 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_marginRight="5dp"
+            android:layout_toLeftOf="@+id/tv_dateForlv"
             android:clickable="true"
             android:focusable="true"
             android:gravity="center"
             android:paddingLeft="3dp"
             android:paddingRight="3dp"
             android:text="推荐人：张三"
-            android:layout_toLeftOf="@+id/tv_dateForlv"
             android:textColor="@android:color/holo_orange_dark"
-            android:textSize="@dimen/text_size_small" />
+            android:textSize="16sp" />
 
         <TextView
             android:id="@+id/tv_dateForlv"

@@ -1,5 +1,8 @@
 package com.offertooffer.demo.ui;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -27,6 +30,7 @@ public class PublishZhaoPinActivity extends ActivityBase {
 	EditText etJob_description;
 	Spinner spinner_citys;
 	EditText etZhongjiefei;
+	EditText etZhiwei;
 
 	private int experience;
 	private int salaryleast;
@@ -37,6 +41,7 @@ public class PublishZhaoPinActivity extends ActivityBase {
 	private String qualifications;
 
 	private String job_descrption;
+	private String zhiwei;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -58,10 +63,11 @@ public class PublishZhaoPinActivity extends ActivityBase {
 		etExperience = (EditText) findViewById(R.id.etexperience);
 		etSalaryLeast = (EditText) findViewById(R.id.etSalaryLeast);
 		etSalaryMax = (EditText) findViewById(R.id.etSalaryMax);
+		etZhiwei = (EditText) findViewById(R.id.etZhiwei);
 		etJob_description = (EditText) findViewById(R.id.ablility_description);
 		radioDaZhuan = (RadioButton) findViewById(R.id.rbDazhuan);
-		radioBenKe = (RadioButton) findViewById(R.id.rbDazhuan);
-		radioShuoShi = (RadioButton) findViewById(R.id.rbDazhuan);
+		radioBenKe = (RadioButton) findViewById(R.id.rbBenKe);
+		radioShuoShi = (RadioButton) findViewById(R.id.rbShuoshi);
 		etZhongjiefei = (EditText) findViewById(R.id.etZhongjiefei);
 		spinner_citys = (Spinner) findViewById(R.id.spinner_citys);
 	}
@@ -72,7 +78,9 @@ public class PublishZhaoPinActivity extends ActivityBase {
 		salaryleast = Integer.parseInt(etSalaryLeast.getText().toString());
 		salarymax = Integer.parseInt(etSalaryMax.getText().toString());
 		zhongjiefei = Integer.parseInt(etZhongjiefei.getText().toString());
+		zhiwei = etZhiwei.getText().toString();
 		job_descrption = etJob_description.getText().toString();
+	
 		if (spinner_citys.getSelectedItem() != null) {
 
 			city = spinner_citys.getSelectedItem().toString();
@@ -85,18 +93,20 @@ public class PublishZhaoPinActivity extends ActivityBase {
 		}
 
 		if (radioDaZhuan.isChecked()) {
-			qualifications = radioBenKe.getText().toString();
+			qualifications = radioDaZhuan.getText().toString();
 		}
 
 		if (radioShuoShi.isChecked()) {
-			qualifications = radioBenKe.getText().toString();
+			qualifications = radioShuoShi.getText().toString();
 		}
 		BmobChatUser currentUser = userManager.getCurrentUser();
-
+     
+		
 		String objectId = currentUser.getObjectId();
+		String username = currentUser.getUsername();
 		Record_ZhaoPin record_ZhaoPin = new Record_ZhaoPin(city, objectId,
 				job_descrption, experience, salaryleast, salarymax,
-				zhongjiefei, qualifications);
+				zhongjiefei, qualifications,zhiwei,username);
 
 		record_ZhaoPin.save(this, new SaveListener() {
 
@@ -120,6 +130,7 @@ public class PublishZhaoPinActivity extends ActivityBase {
 	}
 
 	public void btn_Return(View view) {
-
+      finish();
+      
 	}
 }
