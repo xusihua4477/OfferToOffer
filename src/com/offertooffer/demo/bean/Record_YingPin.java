@@ -8,6 +8,21 @@ import cn.bmob.v3.BmobObject;
  *
  */
 public class Record_YingPin extends BmobObject {
+	@Override
+	public String toString() {
+		String xingbie ="男";
+		if (!this.sex) {
+			xingbie ="女";
+		} 
+		
+		return   age+"岁 "
+				+ "/" + work_years + "年经验/薪金" + salary
+				+  "/" + xingbie
+				+ "/" + qualifications 
+				;
+	}
+
+
 	String city;
 	/**
 	 * 发布者的id
@@ -29,24 +44,21 @@ public class Record_YingPin extends BmobObject {
 	 * xueli,学历
 	 */
 	String qualifications;
+	String zhiwei;
 /**
  * 推荐人姓名
  */
 String tuijianren;
-	public String getTuijianren_name() {
-	return tuijianren;
-}
+	
 
 
-public void setTuijianren_name(String tuijianren_name) {
-	this.tuijianren = tuijianren_name;
-}
 
 
 	public Record_YingPin(String city, String object_id,
 			String recommend_reason, int age, int work_years, int salary,
-			int zhongjiefei, Boolean sex2, String qualifications,String tuijianren) {
+			int zhongjiefei, Boolean sex2, String qualifications,String tuijianren,String job) {
 		super();
+		
 		this.tuijianren=tuijianren;
 		this.city = city;
 		this.object_id = object_id;
@@ -57,6 +69,7 @@ public void setTuijianren_name(String tuijianren_name) {
 		this.zhongjiefei = zhongjiefei;
 		this.sex = sex2;
 		this.qualifications = qualifications;
+		this.zhiwei=job;
 	}
 
 
@@ -67,6 +80,26 @@ public void setTuijianren_name(String tuijianren_name) {
 
 	public void setCity(String city) {
 		this.city = city;
+	}
+
+
+	public String getZhiwei() {
+		return zhiwei;
+	}
+
+
+	public void setZhiwei(String zhiwei) {
+		this.zhiwei = zhiwei;
+	}
+
+
+	public String getTuijianren() {
+		return tuijianren;
+	}
+
+
+	public void setTuijianren(String tuijianren) {
+		this.tuijianren = tuijianren;
 	}
 
 

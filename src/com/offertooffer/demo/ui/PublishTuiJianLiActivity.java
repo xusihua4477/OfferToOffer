@@ -47,6 +47,8 @@ public class PublishTuiJianLiActivity extends ActivityBase {
 	private String qualifications;
 
 	private String recommend_reason;
+	private EditText etJob;
+	private String zhiwei;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -59,13 +61,14 @@ public class PublishTuiJianLiActivity extends ActivityBase {
 	private void initView() {
 
 		etAge = (EditText) findViewById(R.id.etAge);
+		etJob = (EditText) findViewById(R.id.etJob);
 		etExperience = (EditText) findViewById(R.id.etexperience);
 		etSalary =(EditText) findViewById(R.id.etSalary);
 		etTuijian_reasion = (EditText) findViewById(R.id.etTuijian_reasion);
 		radioSex = (RadioButton) findViewById(R.id.rbMale);
 		 radioDaZhuan = (RadioButton) findViewById(R.id.rbDazhuan);
-		radioBenKe = (RadioButton) findViewById(R.id.rbDazhuan);
-		radioShuoShi = (RadioButton) findViewById(R.id.rbDazhuan);
+		radioBenKe = (RadioButton) findViewById(R.id.rbBenKe);
+		radioShuoShi = (RadioButton) findViewById(R.id.rbShuoshi);
 		etZhongjiefei = (EditText) findViewById(R.id.etZhongjiefei);
 		spinner_citys=(Spinner) findViewById(R.id.spinner_citys);
 	}
@@ -82,7 +85,7 @@ public class PublishTuiJianLiActivity extends ActivityBase {
 		String username = currentUser.getUsername();
 		
 		String objectId = currentUser.getObjectId();
-		Record_YingPin yingPinlist = new Record_YingPin(city, objectId, recommend_reason, age, experience, salary, zhongjiefei, sex, qualifications,username);
+		Record_YingPin yingPinlist = new Record_YingPin(city, objectId, recommend_reason, age, experience, salary, zhongjiefei, sex, qualifications, username, zhiwei);
 		yingPinlist.save(this, new SaveListener() {
 			
 			@Override
@@ -115,11 +118,15 @@ public class PublishTuiJianLiActivity extends ActivityBase {
 		salary = Integer.parseInt(etSalary.getText().toString());
 		zhongjiefei = Integer.parseInt(etZhongjiefei.getText().toString());
 		 recommend_reason = etTuijian_reasion.getText().toString();
+		 zhiwei = etJob.getText().toString();
+		 
+		 
 		 if(spinner_citys.getSelectedItem()!=null){
 			 
 			 city = spinner_citys.getSelectedItem().toString();
 		 }else{
 			 city ="±±¾©";
+			 
 		 }
 		
 		if (radioSex.isChecked()) {
@@ -132,11 +139,11 @@ public class PublishTuiJianLiActivity extends ActivityBase {
 		}
        
 		if (radioDaZhuan.isChecked()) {
-			qualifications=radioBenKe.getText().toString();
+			qualifications=radioDaZhuan.getText().toString();
 		}
 		
 		if (radioShuoShi.isChecked()) {
-			qualifications=radioBenKe.getText().toString();
+			qualifications=radioShuoShi.getText().toString();
 		}
 		
 		return true;

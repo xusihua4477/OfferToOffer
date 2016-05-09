@@ -144,13 +144,26 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="fill_horizontal"
-                android:hint="他要求工资多少"
+                android:hint="工资多少"
                  />
 
             <TextView
                 style="@style/tvStyle"
-                android:text="K" >
+                android:text="K   " >
             </TextView>
+             <TextView
+                style="@style/tvStyle"
+                android:layout_height="wrap_content"
+                android:maxEms="2"
+                android:text="职位" />
+
+            <EditText
+                android:id="@+id/etJob"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="fill_horizontal"
+                android:hint="啥职位"
+                 />
         </LinearLayout>
 
         <LinearLayout
@@ -251,7 +264,7 @@
             android:layout_height="35dp"
             android:layout_gravity="bottom"
             android:background="@android:color/darker_gray"
-            android:onClick="btnReturn"
+            android:onClick="btn_return"
             android:text="返回" />
         </LinearLayout>
     </LinearLayout>

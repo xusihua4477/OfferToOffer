@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.offertooffer.demo"
-    android:versionCode="15"
-    android:versionName="1.1.5" >
+    android:versionCode="1"
+    android:versionName="1.0.0" >
 
     <uses-sdk
         android:minSdkVersion="14"
         android:targetSdkVersion="19" />
-    
      <supports-screens
         android:anyDensity="true"
         android:largeScreens="true"
@@ -106,6 +105,7 @@
         <activity android:name="com.offertooffer.demo.ui.LocationActivity" />
         
         <activity android:name="com.offertooffer.demo.ui.BlackListActivity" />
+        <activity android:name="com.offertooffer.demo.ui.ShowDetailYinPinActivity" />
         
         <activity android:name="com.offertooffer.demo.ui.ImageBrowserActivity" />
         

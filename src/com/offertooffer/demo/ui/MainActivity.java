@@ -37,13 +37,12 @@ import com.lidroid.xutils.BitmapUtils;
 import com.offertooffer.demo.CustomApplcation;
 import com.offertooffer.demo.MyMessageReceiver;
 import com.offertooffer.demo.R;
-import com.offertooffer.demo.adapter.ShowTuiJianAdapter;
 import com.offertooffer.demo.bean.Record_YingPin;
 import com.offertooffer.demo.bean.Record_ZhaoPin;
 import com.offertooffer.demo.ui.fragment.ContactFragment;
 import com.offertooffer.demo.ui.fragment.RecentFragment;
 import com.offertooffer.demo.ui.fragment.SettingsFragment;
-import com.offertooffer.demo.ui.fragment.ZhaoPinListFragment;
+import com.offertooffer.demo.ui.fragment.InfoListFragment;
 
 /**
  * 登陆
@@ -64,7 +63,7 @@ public class MainActivity extends ActivityBase implements EventListener {
 	private int currentTabIndex;
 
 	ImageView iv_recent_tips, iv_contact_tips;// 消息提示
-	private ZhaoPinListFragment zhaopinListFragment;
+	private InfoListFragment zhaopinListFragment;
 	private SlidingMenu slidingMenu;
 	private View view_sldingMunu;
 
@@ -130,7 +129,7 @@ public class MainActivity extends ActivityBase implements EventListener {
 
 			view.setOnClickListener(new OnClickListener() {
 
-				private ZhaoPinListFragment zhaoPinListFragment;
+				private InfoListFragment zhaoPinListFragment;
 
 				@Override
 				public void onClick(View v) {
@@ -152,32 +151,31 @@ public class MainActivity extends ActivityBase implements EventListener {
 						// 对应 发布推荐人信息
 						case 3:
 
-							/*
-							 * i = new Intent(MainActivity.this,
-							 * PublishTuiJianLiActivity.class);
-							 * startActivity(i);
-							 */
+							
+							  i = new Intent(MainActivity.this,
+							 PublishTuiJianLiActivity.class);
+							  startActivity(i);
+							 
 							break;
 
-						// 对应 浏览招聘信息
+						// 对应 浏览招聘信息，zhaoPinListFragment既显示招聘信息也显示推荐信息(但两者不同时显示)
 						case 4:
 							/*
 							 * i = new Intent(MainActivity.this,
 							 * ShowZhaoPinActivity.class); startActivity(i);
 							 */
-							zhaoPinListFragment = (ZhaoPinListFragment) getSupportFragmentManager()
+							zhaoPinListFragment = (InfoListFragment) getSupportFragmentManager()
 									.findFragmentByTag("zhaopinListFragment");
-							initTopBarForOnlyTitle("招聘信息");
+						
 							setDataForZhaoPinlist(zhaoPinListFragment.lvForXinxi,MainActivity.this);
 							slidingMenu.showContent();
 
 							break;
 						// 对应 浏览荐人信息
 						case 5:
-							initTopBarForOnlyTitle("人才推荐信息");
-							zhaoPinListFragment = (ZhaoPinListFragment) getSupportFragmentManager()
+						
+							zhaoPinListFragment = (InfoListFragment) getSupportFragmentManager()
 									.findFragmentByTag("zhaopinListFragment");
-
 							setDataForTuijianlist(
 									zhaoPinListFragment.lvForXinxi,
 									MainActivity.this);
@@ -207,17 +205,12 @@ public class MainActivity extends ActivityBase implements EventListener {
 
 	public void setDataForTuijianlist(final ListView lvForXinxi,
 			final Context context) {
-
 		final BmobQuery<Record_YingPin> bmobQuery = new BmobQuery<Record_YingPin>();
 		bmobQuery.order("createdAt");
 		// 先判断是否有缓存
 		boolean isCache = bmobQuery.hasCachedResult(context,
 				Record_YingPin.class);
-		if (isCache) {
-			bmobQuery.setCachePolicy(CachePolicy.CACHE_ELSE_NETWORK); // 先从缓存取数据，如果没有的话，再从网络取。
-		} else {
-			bmobQuery.setCachePolicy(CachePolicy.NETWORK_ELSE_CACHE); // 如果没有缓存的话，则先从网络中取
-		}
+			bmobQuery.setCachePolicy(CachePolicy.NETWORK_ELSE_CACHE); 
 		bmobQuery.findObjects(context, new FindListener<Record_YingPin>() {
 			@SuppressLint("ShowToast")
 			@Override
@@ -230,7 +223,7 @@ public class MainActivity extends ActivityBase implements EventListener {
 			public void onSuccess(List<Record_YingPin> lists) {
 				// TODO Auto-generated method stub
 				zhaopinListFragment.setTuijianlvAdapter(lists);
-
+				zhaopinListFragment.initTopBarForOnlyTitle("人才推荐信息");
 			}
 
 		});
@@ -262,7 +255,7 @@ public class MainActivity extends ActivityBase implements EventListener {
 				System.out.println(lists.get(0).toString());
 				System.out.println(lists.get(0).toString());
 				zhaopinListFragment.setZhaopinlvAdapter(lists);
-
+				zhaopinListFragment.initTopBarForOnlyTitle("招聘信息");
 			}
 
 		});
@@ -286,7 +279,7 @@ public class MainActivity extends ActivityBase implements EventListener {
 		contactFragment = new ContactFragment();
 		recentFragment = new RecentFragment();
 		settingFragment = new SettingsFragment();
-		zhaopinListFragment = new ZhaoPinListFragment();
+		zhaopinListFragment = new InfoListFragment();
 		fragments = new Fragment[] { recentFragment, contactFragment,
 				settingFragment, zhaopinListFragment };
 		// 添加显示第一个fragment

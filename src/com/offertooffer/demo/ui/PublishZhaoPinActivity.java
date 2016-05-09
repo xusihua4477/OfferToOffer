@@ -17,7 +17,7 @@ import cn.bmob.v3.listener.SaveListener;
 import com.offertooffer.demo.R;
 import com.offertooffer.demo.bean.Record_YingPin;
 import com.offertooffer.demo.bean.Record_ZhaoPin;
-import com.offertooffer.demo.ui.fragment.ZhaoPinListFragment;
+import com.offertooffer.demo.ui.fragment.InfoListFragment;
 
 public class PublishZhaoPinActivity extends ActivityBase {
 

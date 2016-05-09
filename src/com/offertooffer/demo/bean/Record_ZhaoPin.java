@@ -1,5 +1,6 @@
 package com.offertooffer.demo.bean;
 
+import java.io.Serializable;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 
@@ -11,7 +12,7 @@ import cn.bmob.v3.a.a.This;
  * @author asan 存储企业发布的招聘记录
  * 
  */
-public class Record_ZhaoPin extends BmobObject {
+public class Record_ZhaoPin extends BmobObject implements Serializable{
 	String city;
 	/**
 	 * 发布者的id
@@ -23,6 +24,14 @@ public class Record_ZhaoPin extends BmobObject {
 	 * 对求职者的具体要求
 	 */
 	String description;
+
+	public String getCompany_name() {
+		return company_name;
+	}
+
+	public void setCompany_name(String company_name) {
+		this.company_name = company_name;
+	}
 
 	public String getZhiwei() {
 		return zhiwei;

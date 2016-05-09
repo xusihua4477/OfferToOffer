@@ -2,13 +2,39 @@
  loving a man ,  you're going to be a slave for this person.；
 loved by a man,  You will become the owner of this person.
 yesterday，I met a gentle girl.I want to be a  slave of her,but she don‘t thank so。
-
-
+转化日期
+	String createdAt = record_YingPin.getCreatedAt();
+		CharSequence subSequence = createdAt.subSequence(0, 10);
 发起聊天
 
 Intent intent = new Intent(this, ChatActivity.class);
 			intent.putExtra("user", user);
 			startAnimActivity(intent);
+
+	/**
+	 * 查询用户
+	 */
+	private void testFindBmobUser() {
+		BmobQuery<MyUser> query = new BmobQuery<MyUser>();
+		query.addWhereEqualTo("username", "lucky");
+		query.findObjects(this, new FindListener<MyUser>() {
+
+			@Override
+			public void onSuccess(List<MyUser> object) {
+				// TODO Auto-generated method stub
+				toast("查询用户成功：" + object.size());
+
+			}
+
+			@Override
+			public void onError(int code, String msg) {
+				// TODO Auto-generated method stub
+				toast("查询用户失败：" + msg);
+			}
+		});
+加缓存
+	boolean isCache = bmobQuery.hasCachedResult(context,
+				Record_YingPin.class);
 
 
 加入黑名单

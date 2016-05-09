@@ -6,6 +6,7 @@ import java.util.List;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -35,6 +36,7 @@ import com.offertooffer.demo.bean.PingJia;
 import com.offertooffer.demo.bean.Record_YingPin;
 import com.offertooffer.demo.bean.Record_ZhaoPin;
 import com.offertooffer.demo.bean.User;
+import com.offertooffer.demo.ui.ChatActivity;
 import com.offertooffer.demo.ui.FragmentBase;
 import com.offertooffer.demo.ui.MainActivity;
 import com.offertooffer.demo.util.CharacterParser;
@@ -50,7 +52,7 @@ import com.offertooffer.demo.view.MyLetterView;
  * @date 2014-6-7 ÏÂÎç1:02:05
  */
 @SuppressLint("DefaultLocale")
-public class ZhaoPinListFragment extends FragmentBase  {
+public class InfoListFragment extends FragmentBase  {
 
 	ClearEditText mClearEditText;
 	public ListView lvForXinxi;
@@ -100,7 +102,10 @@ public class ZhaoPinListFragment extends FragmentBase  {
 		lvForXinxi = (ListView) findViewById(R.id.lvForXinxi);
 	}
 
-
+	private void findUser(String zhongjie_id) {
+		// TODO Auto-generated method stub
+		
+	}
 
 	public void setTuijianlvAdapter(List<Record_YingPin> lists) {
 		// TODO Auto-generated method stub
@@ -110,13 +115,18 @@ public class ZhaoPinListFragment extends FragmentBase  {
 				lists, new ShowTuiJianAdapter.OnItem_onclickLister() {
 
 					@Override
-					public void btn_connect_zhongjie(String zhongjie_id) {
+					public void btn_connect_zhongjie(User user) {
 						// TODO Auto-generated method stub
-						System.out.println("btn_connect_zhongjie");
-						System.out.println("btn_connect_zhongjie");
-						System.out.println("btn_connect_zhongjie");
+						   
+						   Intent intent = new Intent(mainActivity, ChatActivity.class);
+							intent.putExtra("user", user);
+							startAnimActivity(intent);
 
+						
+						
 					}
+
+				
 
 				});
 
@@ -131,11 +141,12 @@ public class ZhaoPinListFragment extends FragmentBase  {
 				lists, new ShowZhaoPinAdapter.OnItem_onclickLister() {
 
 					@Override
-					public void btn_connect_zhaopinzhe(String zhongjie_id) {
-						// TODO Auto-generated method stub
-								System.out.println("btn_connect_zhaopinzhe");
-								System.out.println("btn_connect_zhaopinzhe");
-								System.out.println("btn_connect_zhaopinzhe");
+					public void btn_connect_zhaopinzhe(User user) {
+						 
+						   Intent intent = new Intent(mainActivity, ChatActivity.class);
+							intent.putExtra("user", user);
+							startAnimActivity(intent);
+
 					}
 
 				});
