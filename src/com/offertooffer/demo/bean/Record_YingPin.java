@@ -17,7 +17,7 @@ public class Record_YingPin extends BmobObject {
 		
 		return   age+"岁 "
 				+ "/" + work_years + "年经验/薪金" + salary
-				+  "/" + xingbie
+				+  "k/" + xingbie
 				+ "/" + qualifications 
 				;
 	}

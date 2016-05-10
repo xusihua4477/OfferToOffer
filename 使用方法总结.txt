@@ -10,6 +10,11 @@ yesterday，I met a gentle girl.I want to be a  slave of her,but she don‘t thank
 Intent intent = new Intent(this, ChatActivity.class);
 			intent.putExtra("user", user);
 			startAnimActivity(intent);
+获取当前用户
+BmobUserManager userManager = BmobUserManager.getInstance(this);
+		if (userManager.getCurrentUser()
+
+
 
 	/**
 	 * 查询用户

@@ -237,8 +237,8 @@
             android:visibility="invisible" />
 
         <Button
-              android:layout_width="100dp"
-            android:layout_height="30dp"
+              android:layout_width="120dp"
+            android:layout_height="35dp"
             android:layout_gravity="bottom"
             android:background="@drawable/btn_login_selector"
             android:gravity="center"

@@ -3,17 +3,21 @@ package com.offertooffer.demo.ui;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import cn.bmob.im.BmobUserManager;
 import cn.bmob.im.bean.BmobChatUser;
 import cn.bmob.v3.listener.SaveListener;
+import cn.bmob.v3.listener.UpdateListener;
 
 import com.offertooffer.demo.R;
 import com.offertooffer.demo.adapter.base.ViewHolder;
 import com.offertooffer.demo.bean.Record_YingPin;
+import com.offertooffer.demo.customerveiw.CustomDialog;
 
 /**
  * 设置昵称和性别
@@ -74,13 +78,16 @@ public class PublishTuiJianLiActivity extends ActivityBase {
 	}
 
 	public void btn_publish(View view) {
+	
+		 
+		 
 		boolean validateDate = validateDate();
 
 		if (!validateDate) {
 			return;
 		}
 
-		userManager = BmobUserManager.getInstance(getApplicationContext());
+		BmobUserManager userManager = BmobUserManager.getInstance(this);
 		BmobChatUser currentUser = userManager.getCurrentUser();
 		String username = currentUser.getUsername();
 		
@@ -91,21 +98,25 @@ public class PublishTuiJianLiActivity extends ActivityBase {
 			@Override
 			public void onSuccess() {
 				// TODO Auto-generated method stub
-				System.out.println("悬赏记录创建成功");
-				System.out.println("悬赏记录创建成功");
+				Toast.makeText(getApplicationContext(), "悬赏记录创建成功", 3000).show();
+				finish();
 			}
 			
 			@Override
 			public void onFailure(int arg0, String arg1) {
 				// TODO Auto-generated method stub
-				System.out.println("悬赏记录创建失败"+arg1);
-				System.out.println("悬赏记录创建失败"+arg1);
-				System.out.println("悬赏记录创建失败"+arg1);
+				Toast.makeText(getApplicationContext(), "悬赏记录创建失败"+arg1, 3000).show();
+	
 				
 			}
 		});
 		
 	}
+
+
+	
+	
+
 	public   <T> T findViewbyid_mine(T t,int id){
 		View view1 =findViewById(id);
 		

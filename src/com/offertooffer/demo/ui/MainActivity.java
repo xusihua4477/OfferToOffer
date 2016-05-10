@@ -13,6 +13,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -31,6 +32,7 @@ import cn.bmob.im.inteface.EventListener;
 import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.BmobQuery.CachePolicy;
 import cn.bmob.v3.listener.FindListener;
+import cn.bmob.v3.listener.UpdateListener;
 
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 import com.lidroid.xutils.BitmapUtils;
@@ -39,6 +41,7 @@ import com.offertooffer.demo.MyMessageReceiver;
 import com.offertooffer.demo.R;
 import com.offertooffer.demo.bean.Record_YingPin;
 import com.offertooffer.demo.bean.Record_ZhaoPin;
+import com.offertooffer.demo.customerveiw.CustomDialog;
 import com.offertooffer.demo.ui.fragment.ContactFragment;
 import com.offertooffer.demo.ui.fragment.RecentFragment;
 import com.offertooffer.demo.ui.fragment.SettingsFragment;
@@ -53,7 +56,7 @@ import com.offertooffer.demo.ui.fragment.InfoListFragment;
  * @date 2014-5-29 下午2:45:35
  */
 public class MainActivity extends ActivityBase implements EventListener {
-
+	private BmobChatUser currentUser;
 	private Button[] mTabs;
 	private ContactFragment contactFragment;
 	private RecentFragment recentFragment;
@@ -130,6 +133,7 @@ public class MainActivity extends ActivityBase implements EventListener {
 			view.setOnClickListener(new OnClickListener() {
 
 				private InfoListFragment zhaoPinListFragment;
+	
 
 				@Override
 				public void onClick(View v) {
@@ -150,12 +154,45 @@ public class MainActivity extends ActivityBase implements EventListener {
 							break;
 						// 对应 发布推荐人信息
 						case 3:
+							slidingMenu.showContent();
+							 currentUser = getCurrentUser();
+								String mobilePhoneNumber = currentUser.getMobilePhoneNumber();
+								if (mobilePhoneNumber==null) {
+									final CustomDialog dialog = new CustomDialog(MainActivity.this);
+									final EditText editText = (EditText) dialog.getEditText();//方法在CustomDialog中实现
+									dialog.setOnPositiveListener(new OnClickListener() {
+										@Override
+										public void onClick(View v) {
+											//dosomething youself
+											//该方法更新用户手机号，成功后进入了发布页面
+											updateCurrentUser_mobilephone(editText.getText().toString());
+											dialog.dismiss();
+										}
+									});
+									dialog.setOnNegativeListener(new OnClickListener() {
+										@Override
+										public void onClick(View v) {
+											dialog.dismiss();
+											return;
+										}
+									});
+									dialog.show();
 
+									
+								}else{
+									
+									Intent i2= new Intent(getApplicationContext(), PublishTuiJianLiActivity.class);
+									
+									startActivity(i2);
+									
+								}
 							
-							  i = new Intent(MainActivity.this,
-							 PublishTuiJianLiActivity.class);
-							  startActivity(i);
-							 
+							
+							
+						
+							
+							
+							
 							break;
 
 						// 对应 浏览招聘信息，zhaoPinListFragment既显示招聘信息也显示推荐信息(但两者不同时显示)
@@ -532,5 +569,26 @@ public class MainActivity extends ActivityBase implements EventListener {
 		// 取消定时检测服务
 		// BmobChat.getInstance(this).stopPollService();
 	}
-
+	protected void updateCurrentUser_mobilephone(String string) {
+		// TODO Auto-generated method stub
+		currentUser.setMobilePhoneNumber(string);
+		currentUser.update(getApplicationContext(),new UpdateListener() {
+			
+			@Override
+			public void onSuccess() {
+				// TODO Auto-generated method stub
+				Toast.makeText(getApplicationContext(), "手机号保存成功", 3000).show();
+				
+				Intent i= new Intent(getApplicationContext(), PublishTuiJianLiActivity.class);
+				
+				startActivity(i);
+			}
+			
+			@Override
+			public void onFailure(int arg0, String arg1) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
+	}
 }
