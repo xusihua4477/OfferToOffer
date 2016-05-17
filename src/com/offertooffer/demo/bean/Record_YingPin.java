@@ -54,6 +54,12 @@ String tuijianren;
 
 
 
+	public Record_YingPin() {
+	super();
+	// TODO Auto-generated constructor stub
+}
+
+
 	public Record_YingPin(String city, String object_id,
 			String recommend_reason, int age, int work_years, int salary,
 			int zhongjiefei, Boolean sex2, String qualifications,String tuijianren,String job) {

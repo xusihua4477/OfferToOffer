@@ -8,14 +8,20 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import cn.bmob.im.BmobUserManager;
+import cn.bmob.im.bean.BmobChatUser;
 import cn.bmob.im.util.BmobLog;
+import cn.bmob.v3.BmobQuery;
+import cn.bmob.v3.listener.GetListener;
 import cn.bmob.v3.listener.SaveListener;
 
+import com.offertooffer.demo.CustomApplcation;
 import com.offertooffer.demo.R;
 import com.offertooffer.demo.bean.User;
 import com.offertooffer.demo.config.BmobConstants;
@@ -97,7 +103,21 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 			login();
 		}
 	}
-	
+	public void settingUserOnApplication(String objectid){
+		BmobQuery<User> query = new BmobQuery<User>();
+		query.getObject(this, "objectid", new GetListener<User>() {
+			
+			@Override
+			public void onSuccess(User user) {
+				CustomApplcation.currentUser=user;
+			}
+			
+			@Override
+			public void onFailure(int code, String msg) {
+				Log.i("life", "onFailure = "+code+",msg = "+msg);
+			}
+		});
+	}
 	private void login(){
 		String name = et_username.getText().toString();
 		String password = et_password.getText().toString();
@@ -120,6 +140,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 		User user = new User();
 		user.setUsername(name);
 		user.setPassword(password);
+		
 		userManager.login(user,new SaveListener() {
 
 			@Override
@@ -131,11 +152,16 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 					public void run() {
 						// TODO Auto-generated method stub
 						progress.setMessage("正在获取好友列表...");
+					  
+						
 					}
+
 				});
 				//更新用户的地理位置以及好友的资料
 				updateUserInfos();
 				progress.dismiss();
+				String objectid = userManager.getCurrentUser().getObjectId();
+				settingUserOnApplication(objectid);
 			//	Intent intent = new Intent(LoginActivity.this,MainActivity.class);
 				Intent intent = new Intent(LoginActivity.this,MainActivity.class);
 				startActivity(intent);
@@ -152,7 +178,8 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 		});
 		
 	}
-	
+
+
 	@Override
 	protected void onDestroy() {
 		// TODO Auto-generated method stub

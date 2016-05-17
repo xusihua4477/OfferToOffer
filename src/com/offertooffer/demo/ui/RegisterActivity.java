@@ -11,13 +11,13 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RadioButton;
 import cn.bmob.im.bean.BmobChatUser;
 import cn.bmob.im.util.BmobLog;
 import cn.bmob.v3.BmobInstallation;
 import cn.bmob.v3.listener.SaveListener;
 
 import com.offertooffer.demo.R;
-import com.offertooffer.demo.bean.OfferUser;
 import com.offertooffer.demo.bean.PingJia;
 import com.offertooffer.demo.bean.User;
 import com.offertooffer.demo.config.BmobConstants;
@@ -26,6 +26,8 @@ import com.offertooffer.demo.util.CommonUtils;
 public class RegisterActivity extends BaseActivity {
 
 	Button btn_register;
+	RadioButton radioZhaoPin;
+	RadioButton radioYingPin;
 	EditText et_username, et_password, et_email;
 	BmobChatUser currentUser;
 
@@ -36,7 +38,8 @@ public class RegisterActivity extends BaseActivity {
 		setContentView(R.layout.activity_register);
 
 		initTopBarForLeft("注册");
-
+		radioZhaoPin=(RadioButton) findViewById(R.id.rbZhaoPin);
+		radioYingPin=(RadioButton) findViewById(R.id.rbYingPin);
 		et_username = (EditText) findViewById(R.id.et_username);
 		et_password = (EditText) findViewById(R.id.et_password);
 		et_email = (EditText) findViewById(R.id.et_email);
@@ -56,6 +59,16 @@ public class RegisterActivity extends BaseActivity {
 		String name = et_username.getText().toString();
 		String password = et_password.getText().toString();
 		String pwd_again = et_email.getText().toString();
+		//默认0，即注册者为应聘者
+		int type=0;
+		
+		if (radioZhaoPin.isChecked()==false &&(radioYingPin.isChecked()==false)) {
+			ShowToast("请选择注册类型");
+			return;
+		}
+		if (radioZhaoPin.isChecked()) {
+			type=1;
+		}
 		
 		if (TextUtils.isEmpty(name)) {
 			ShowToast(R.string.toast_error_username_null);
@@ -91,7 +104,7 @@ public class RegisterActivity extends BaseActivity {
 		List <PingJia> pingJias=new ArrayList<PingJia>();
 		pingJias.add(pingJia2);
 		
-		final OfferUser bu=new OfferUser("zhangsan", 1, true, 3);
+		final User bu=new User("zhangsan", type, true, 0);
 		bu.addAll("pingjia_list", pingJias);
 	
 		bu.setUsername(name);

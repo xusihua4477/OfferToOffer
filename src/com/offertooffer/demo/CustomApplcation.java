@@ -27,7 +27,7 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 import com.nostra13.universalimageloader.utils.StorageUtils;
-import com.offertooffer.demo.R;
+import com.offertooffer.demo.bean.User;
 import com.offertooffer.demo.util.CollectionUtils;
 import com.offertooffer.demo.util.SharePreferenceUtil;
 
@@ -41,6 +41,7 @@ import com.offertooffer.demo.util.SharePreferenceUtil;
 public class CustomApplcation extends Application {
 
 	public static CustomApplcation mInstance;
+	public static User currentUser;;
 	public LocationClient mLocationClient;
 	public MyLocationListener mMyLocationListener;
 

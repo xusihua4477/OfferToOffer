@@ -5,11 +5,62 @@ yesterday，I met a gentle girl.I want to be a  slave of her,but she don‘t thank
 转化日期
 	String createdAt = record_YingPin.getCreatedAt();
 		CharSequence subSequence = createdAt.subSequence(0, 10);
+		
+		
+		批量操作
+		List<BmobObject> persons = new ArrayList<BmobObject>();
+		for (int i = 0; i < 3; i++) {
+			Person person = new Person();
+			person.setName("张三 "+i);
+			person.setAddress("上海朝阳路"+i+"号");
+			person.setGpsAdd(new BmobGeoPoint(112.934755, 24.52065));
+			person.setUploadTime(new BmobDate(new Date()));
+			List<String> hobbys = new ArrayList<String>();
+			hobbys.add("阅读");
+			hobbys.add("篮球");
+			hobbys.add("唱歌");
+			person.setHobby(hobbys);
+			person.setBankCard(new BankCard("中国银行", "176672673687545097"+i));
+			//可批量添加带Poniter类型的数据，例如
+			person.setAuthor(BmobUser.getCurrentUser(this, MyUser.class));
+			persons.add(person);
+		}
+		
+		new BmobObject().insertBatch(this, persons, new SaveListener() {
+			
+			@Override
+			public void onSuccess() {
+				// TODO Auto-generated method stub
+				toast("批量添加成功");
+			}
+			
+			@Override
+			public void onFailure(int code, String msg) {
+				// TODO Auto-generated method stub
+				toast("批量添加失败:"+msg);
+			}
+		});
+		
 发起聊天
 
 Intent intent = new Intent(this, ChatActivity.class);
 			intent.putExtra("user", user);
 			startAnimActivity(intent);
+			
+		BmobQuery<Person> query = new BmobQuery<Person>();
+		query.getObject(this, "4cab44a404", new GetListener<Person>() {
+			
+			@Override
+			public void onSuccess(Person object) {
+				Log.i("life", ""+object.getName());
+			}
+			
+			@Override
+			public void onFailure(int code, String msg) {
+				Log.i("life", "onFailure = "+code+",msg = "+msg);
+			}
+		});		
+			
 获取当前用户
 BmobUserManager userManager = BmobUserManager.getInstance(this);
 		if (userManager.getCurrentUser()

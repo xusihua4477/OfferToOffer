@@ -2,6 +2,8 @@ package com.offertooffer.demo.bean;
 
 
 
+import java.util.List;
+
 import cn.bmob.im.bean.BmobChatUser;
 import cn.bmob.v3.datatype.BmobGeoPoint;
 import cn.bmob.v3.datatype.BmobRelation;
@@ -35,7 +37,57 @@ public class User extends BmobChatUser {
 	private Boolean sex;
 	
 	private Blog blog;
+	/**
+	 * 0表示招聘单位注册，1表示推荐人注册
+	 */
+	int userType;
+	/**
+	 * 发布者的信用
+	 */
+	int credit;
+
+	public User() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
 	
+
+	public User(String username, int userType, Boolean sex, int credit) {
+		super();
+		this.userType = userType;
+		this.setSex(sex);
+		this.credit = credit;
+		this.setUsername(username);
+	}
+	
+	/**
+	 * 0表示招聘单位注册，1表示推荐人注册,2表示获取类型未知（网络连接失败不知道什么类型）
+	 */
+	public int getUserType() {
+		return userType;
+	}
+	/**
+	 * 0表示招聘单位注册，1表示推荐人注册
+	 */
+	public void setUserType(int userType) {
+		this.userType = userType;
+	}
+	public int getCredit() {
+		return credit;
+	}
+	public void setCredit(int credit) {
+		this.credit = credit;
+	}
+	public List<PingJia> getPingjia_list() {
+		return pingjia_list;
+	}
+	public void setPingjia_list(List<PingJia> pingjia_list) {
+		this.pingjia_list = pingjia_list;
+	}
+	/**
+	 * 其他人对发布者的评价
+	 */
+	List<PingJia> pingjia_list;
 	/**
 	 * 地理坐标
 	 */

@@ -32,6 +32,7 @@ import cn.bmob.im.inteface.EventListener;
 import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.BmobQuery.CachePolicy;
 import cn.bmob.v3.listener.FindListener;
+import cn.bmob.v3.listener.GetListener;
 import cn.bmob.v3.listener.UpdateListener;
 
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
@@ -41,11 +42,12 @@ import com.offertooffer.demo.MyMessageReceiver;
 import com.offertooffer.demo.R;
 import com.offertooffer.demo.bean.Record_YingPin;
 import com.offertooffer.demo.bean.Record_ZhaoPin;
+import com.offertooffer.demo.bean.User;
 import com.offertooffer.demo.customerveiw.CustomDialog;
 import com.offertooffer.demo.ui.fragment.ContactFragment;
+import com.offertooffer.demo.ui.fragment.InfoListFragment;
 import com.offertooffer.demo.ui.fragment.RecentFragment;
 import com.offertooffer.demo.ui.fragment.SettingsFragment;
-import com.offertooffer.demo.ui.fragment.InfoListFragment;
 
 /**
  * 登陆
@@ -69,6 +71,7 @@ public class MainActivity extends ActivityBase implements EventListener {
 	private InfoListFragment zhaopinListFragment;
 	private SlidingMenu slidingMenu;
 	private View view_sldingMunu;
+	private ImageView ivUser_slidingMenu;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -82,8 +85,52 @@ public class MainActivity extends ActivityBase implements EventListener {
 		initNewMessageBroadCast();
 		initTagMessageBroadCast();
 		initView();
+		setCurrentUser();
 		initTab();
-		initSiindMenu();
+		
+	}
+
+protected void onNewIntent(Intent intent) {
+	// TODO Auto-generated method stub
+	super.onNewIntent(intent);
+	
+	switch (intent.getAction()) {
+	case "intent.updateAvatar":
+		updateUserAvtarOnSlingMenu();
+		
+		break;
+
+	default:
+		break;
+	}
+	
+	
+}
+	private void setCurrentUser() {
+		// TODO Auto-generated method stub
+		
+		BmobChatUser currentUser = userManager.getCurrentUser();
+		final String objectId = currentUser.getObjectId();
+		BmobQuery<User> query = new BmobQuery<User>();
+		query.getObject(this, objectId, new GetListener<User>() {
+			
+			@Override
+			public void onSuccess(User object) {
+				CustomApplcation.currentUser=object;
+				initSiindMenu();
+			}
+			
+			@Override
+			public void onFailure(int code, String msg) {
+				User user=new User();
+				user.setObjectId(objectId);
+				user.setUserType(2);
+				BmobChatUser currentUser2 = userManager.getCurrentUser();
+				user.setUsername(currentUser2.getUsername());
+				CustomApplcation.currentUser=user;
+				initSiindMenu();
+			}
+		});		
 	}
 
 	private void initSiindMenu() {
@@ -97,6 +144,14 @@ public class MainActivity extends ActivityBase implements EventListener {
 		slidingMenu.setBehindWidth(400);
 		view_sldingMunu = View.inflate(getApplicationContext(),
 				R.layout.slidingmenu, null);
+		//o是应聘方不能发布招聘信息，1是招聘方不能发布应聘信息	2代表类型获取失败
+		if (CustomApplcation.currentUser.getUserType()==0) {
+			
+			view_sldingMunu.findViewById(R.id.re_publish_jianren).setVisibility(View.GONE);
+		} else if(CustomApplcation.currentUser.getUserType()==1) {
+			view_sldingMunu.findViewById(R.id.re_publish_zhaopin).setVisibility(View.GONE);
+		}
+		
 
 		setSlidingMenuOnitemListener(view_sldingMunu);
 		slidingMenu.setMenu(view_sldingMunu);
@@ -107,22 +162,31 @@ public class MainActivity extends ActivityBase implements EventListener {
 	private void setSlidingmenu_UserInfo(View view11) {
 		// TODO Auto-generated method stub
 		BmobChatUser currentUser = userManager.getCurrentUser();
-		ImageView ivUser_slidingMenu = (ImageView) view11
+		 ivUser_slidingMenu = (ImageView) view11
 				.findViewById(R.id.iv_headIv);
 		TextView tvName = (TextView) view11.findViewById(R.id.tvLoginName);
 		if (currentUser.getUsername() != null) {
 			tvName.setText(currentUser.getUsername());
 		}
-
-		BitmapUtils bitmapUtils = new BitmapUtils(getApplicationContext());
-
-		String uri = currentUser.getAvatar();
-		bitmapUtils.display(ivUser_slidingMenu, uri);
+		updateUserAvtarOnSlingMenu();
+	
 
 		// ivUser_slidingMenu.setImageBitmap(bm);
 
 	}
 
+	private void updateUserAvtarOnSlingMenu() {
+		// TODO Auto-generated method stub
+		BitmapUtils bitmapUtils = new BitmapUtils(getApplicationContext());
+		
+		BmobChatUser currentUser = userManager.getCurrentUser();
+		String uri = currentUser.getAvatar();
+		if (uri==null) {
+			ivUser_slidingMenu.setImageDrawable(getResources().getDrawable(R.drawable.default_head));
+			return;
+		}
+		bitmapUtils.display(ivUser_slidingMenu, uri);
+	}
 	private void setSlidingMenuOnitemListener(View view_sldingMunu) {
 		// TODO Auto-generated method stub
 		LinearLayout fl = (LinearLayout) view_sldingMunu
@@ -224,7 +288,11 @@ public class MainActivity extends ActivityBase implements EventListener {
 							break;
 						// 对应 我发布的信息
 						case 6:
-
+							slidingMenu.showContent();
+							Intent i2= new Intent(getApplicationContext(), ShowMinePublishedMsgActivty.class);
+							
+							startActivity(i2);
+							
 							break;
 						// 对应 通知信息
 						case 7:
@@ -587,8 +655,9 @@ public class MainActivity extends ActivityBase implements EventListener {
 			@Override
 			public void onFailure(int arg0, String arg1) {
 				// TODO Auto-generated method stub
-				
+				Toast.makeText(getApplicationContext(), arg1, 3000).show();
 			}
 		});
 	}
+
 }

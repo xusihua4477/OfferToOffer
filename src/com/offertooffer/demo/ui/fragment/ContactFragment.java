@@ -97,6 +97,7 @@ public class ContactFragment extends FragmentBase implements OnItemClickListener
 		super.onActivityCreated(savedInstanceState);
 		inputMethodManager = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
 		init();
+		
 	}
 
 	private void init() {

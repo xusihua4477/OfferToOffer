@@ -8,6 +8,48 @@
     <include
         android:id="@+id/common_actionbar"
         layout="@layout/include_action_bar" />
+  
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:orientation="horizontal" >
+   <TextView
+           
+            android:layout_height="match_parent"
+            android:layout_width="40dp"
+            android:gravity="center_vertical"
+            android:paddingLeft="10dp"
+            android:text="注册类型"
+            android:textSize="14sp"
+            android:maxEms="2"
+            android:textStyle="bold" />
+        
+        <RadioGroup
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="80dp"
+            android:layout_columnSpan="1"
+             android:gravity="center_vertical"
+            android:orientation="vertical"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp" >
+
+            <RadioButton
+                android:id="@+id/rbZhaoPin"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:layout_marginBottom="5dp"
+                android:checked="false"
+                android:text="@string/type_zhaopin" />
+
+            <RadioButton
+                android:id="@+id/rbYingPin"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:checked="true"
+                android:text="@string/type_yingpin" />
+        </RadioGroup>
+    </LinearLayout>
 
     <LinearLayout style="@style/Register_Input" >
 
@@ -38,12 +80,11 @@
         <EditText
             android:id="@+id/et_password"
             style="@style/Register_Edit"
-             android:inputType="textPassword"
-            android:hint="@string/login_password_hint" />
+            android:hint="@string/login_password_hint"
+            android:inputType="textPassword" />
     </LinearLayout>
 
-    <LinearLayout 
-        style="@style/Register_Input" >
+    <LinearLayout style="@style/Register_Input" >
 
         <TextView
             style="@style/Smile.TextView._Black"
@@ -56,8 +97,8 @@
         <EditText
             android:id="@+id/et_email"
             style="@style/Register_Edit"
-             android:inputType="textPassword"
-            android:hint="@string/login_email_hint" />
+            android:hint="@string/login_email_hint"
+            android:inputType="textPassword" />
     </LinearLayout>
 
     <Button

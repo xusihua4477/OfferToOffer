@@ -152,7 +152,8 @@ public class SetMyInfoActivity extends ActivityBase implements OnClickListener {
 	}
 
 	private void initMeData() {
-		User user = userManager.getCurrentUser(User.class);
+		User user = CustomApplcation.currentUser;
+	
 		BmobLog.i("hight = "+user.getHight()+",sex= "+user.getSex());
 		initOtherData(user.getUsername());
 	}
@@ -498,6 +499,7 @@ public class SetMyInfoActivity extends ActivityBase implements OnClickListener {
 					ShowToast("SD不可用");
 					return;
 				}
+				
 				isFromCamera = true;
 				File file = new File(filePath);
 				degree = PhotoUtil.readPictureDegree(file.getAbsolutePath());
@@ -543,7 +545,7 @@ public class SetMyInfoActivity extends ActivityBase implements OnClickListener {
 			// 初始化文件路径
 			filePath = "";
 			// 上传头像
-			uploadAvatar();
+		
 			break;
 		default:
 			break;
@@ -561,7 +563,10 @@ public class SetMyInfoActivity extends ActivityBase implements OnClickListener {
 				// TODO Auto-generated method stub
 				String url = bmobFile.getFileUrl(SetMyInfoActivity.this);
 				// 更新BmobUser对象
+				Intent intent=new Intent("intent.updateAvatar");
+				SetMyInfoActivity.this.sendBroadcast(intent);
 				updateUserAvatar(url);
+				
 			}
 
 			@Override

@@ -31,7 +31,6 @@ import com.offertooffer.demo.R;
 import com.offertooffer.demo.adapter.ShowTuiJianAdapter;
 import com.offertooffer.demo.adapter.ShowZhaoPinAdapter;
 import com.offertooffer.demo.adapter.UserFriendAdapter;
-import com.offertooffer.demo.bean.OfferUser;
 import com.offertooffer.demo.bean.PingJia;
 import com.offertooffer.demo.bean.Record_YingPin;
 import com.offertooffer.demo.bean.Record_ZhaoPin;

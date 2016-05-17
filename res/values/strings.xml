@@ -52,6 +52,8 @@
     <string name="blacklist">黑名单</string>
     <string name="chat">发起会话</string>
     <string name="add_friend">添加好友</string>
+    <string name="type_zhaopin">我是用人单位，我要招人</string>
+    <string name="type_yingpin">我是推荐人，我要荐人赚外快</string>
     
     <string name="send_state">已读</string>
     

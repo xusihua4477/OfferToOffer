@@ -1,8 +1,13 @@
 package com.offertooffer.demo.util;
 
+import cn.bmob.v3.BmobQuery;
+import cn.bmob.v3.listener.GetListener;
+
+
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.util.Log;
 
 public class CommonUtils {
 
@@ -50,5 +55,6 @@ public class CommonUtils {
 		else
 			return false;
 	}
-
+	
+	
 }
